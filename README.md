@@ -11,9 +11,15 @@ Packages used:
 5. react-native-chart-kit
 
 ## Screenshots (iOS)
-![Screenshot1](screenshots/IMG_0968.PNG =100x20)
 <img src="screenshots/IMG_0968.PNG" alt="drawing" width="200"/>
-![Screenshot2](https://github.com/RajeshRao93/ExpensesDiary/blob/master/screenshots/IMG_0969.PNG =100x20)
+<img src="screenshots/IMG_0969.PNG" alt="drawing" width="200"/>
+<img src="screenshots/IMG_0970.PNG" alt="drawing" width="200"/>
+<img src="screenshots/IMG_0971.PNG" alt="drawing" width="200"/>
+<img src="screenshots/IMG_0972.PNG" alt="drawing" width="200"/>
+<img src="screenshots/IMG_0973.PNG" alt="drawing" width="200"/>
+
+
+
 
 
 
