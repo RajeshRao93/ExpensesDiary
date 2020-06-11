@@ -11,7 +11,7 @@ Packages used:
 5. react-native-chart-kit
 
 ## Screenshots (iOS)
-![alt text](http://url/to/img.png)
+![alt text](screenshots/IMG_0968.PNG)
 
 
 
