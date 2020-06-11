@@ -12,6 +12,7 @@ Packages used:
 
 ## Screenshots (iOS)
 ![Screenshot1](screenshots/IMG_0968.PNG =100x20)
+<img src="screenshots/IMG_0968.PNG" alt="drawing" width="200"/>
 ![Screenshot2](https://github.com/RajeshRao93/ExpensesDiary/blob/master/screenshots/IMG_0969.PNG =100x20)
 
 
