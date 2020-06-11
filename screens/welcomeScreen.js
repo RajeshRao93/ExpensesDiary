@@ -27,7 +27,7 @@ const WelcomeScreen = (props) => {
     <View style={styles.animated}>
       <Animated.View style={{ opacity: fade }}>
         <View style={styles.logoView}>
-          <Text style={styles.logo}>EXPENSE DIARY</Text>
+          <Text style={styles.logo}>EXPENSES DIARY</Text>
         </View>
       </Animated.View>
     </View>
