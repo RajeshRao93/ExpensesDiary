@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Button, Text, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
 import { Icon } from "react-native-elements";
-
-let images = ["Food", "Rent", "Fuel", "Misc", "some"];
+import constant from "../assets/constants";
 
 const StartScreen = (props) => {
   return (
@@ -13,7 +19,7 @@ const StartScreen = (props) => {
           name="md-list-box"
           type="ionicon"
           color="black"
-          onPress={() => props.changeScreen("MoreWishes")}
+          onPress={() => props.changeScreen("YearFilterScreen")}
           size={50}
         />
         <Text>View Expenses</Text>
@@ -36,11 +42,11 @@ const StartScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: constant.backgroundColor,
   },
   tiles: {
     width: "100%",
     height: "50%",
-    backgroundColor: "#ffcc00", //"#d9d9d9",
     justifyContent: "center",
     alignItems: "center",
   },

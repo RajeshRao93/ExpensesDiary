@@ -7,12 +7,14 @@ import {
   Text,
   TextInput,
   ScrollView,
+  TouchableOpacity,
   Picker,
   KeyboardAvoidingView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as SQLite from "expo-sqlite";
-import { Icon } from "react-native-elements";
+import { Icon, Card } from "react-native-elements";
+import constants from "../assets/constants";
 
 const categories = [
   "None",
@@ -30,6 +32,21 @@ const categories = [
   "Shopping",
   "Car",
   "Misc.",
+];
+
+let months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const AddExpensesScreen = (props) => {
@@ -68,50 +85,74 @@ const AddExpensesScreen = (props) => {
     //+1 date value for iOS
     let dbDate =
       date.getDate().toString() +
-      (date.getMonth() + 1).toString() +
+      "-" +
+      months[date.getMonth()].toString() +
+      "-" +
       date.getFullYear().toString();
-
+    console.log(dbDate);
     if (amount == 0 || note == "") {
       alert("Plase enter Amount and Note");
       return;
     }
 
     let query =
-      "insert into expenseDetails (date, category, amount, note) values (" +
+      "insert into expenses (date, category, amount, note, year, month) values ('" +
       dbDate +
-      ",'" +
+      "','" +
       category +
       "'," +
       amount +
       ",'" +
       note +
-      "')";
-
+      "'," +
+      date.getFullYear() +
+      ",'" +
+      months[date.getMonth()] +
+      "'" +
+      ")";
     db.transaction((tx) => {
       tx.executeSql(query);
     });
 
     alert("Expense saved");
-    setAmount(0);
+    setAmount("");
     setNote("");
     setCategory("");
   };
 
-  db.transaction((tx) => {
-    tx.executeSql(
-      "create table if not exists expenseDetails (id integer primary key not null, date text, category text, amount real, note text );"
-    );
-    // tx.executeSql("select * from expenseDetails", [], (_, { rows }) =>
-    //   console.log(JSON.stringify(rows))
-    // );
-  });
+  try {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "create table if not exists expenses (id integer primary key not null, date text, category text, amount real, note text, year integer, month text )"
+      );
+      //   tx.executeSql("select * from expenses", [], (_, { rows }) =>
+      //     console.log(JSON.stringify(rows))
+      //   );
+      //   tx.executeSql(
+      //     "insert into expenseDetails (date, category, amount, note, year) values (2282020,'Food',63,'Test',2020)"
+      //   );
+      //
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <Text style={styles.heading}>Enter your expenses</Text>
+      <View style={styles.header}>
+        <Icon
+          reverse
+          name="md-arrow-back"
+          type="ionicon"
+          color="black"
+          onPress={() => props.changeScreen("StartScreen")}
+          size={15}
+        />
+        <Text style={styles.heading}>Enter expenses</Text>
+      </View>
       <ScrollView>
         <View style={styles.expenseData}>
           <View>
@@ -142,6 +183,8 @@ const AddExpensesScreen = (props) => {
           </View>
           {showDatepicker && (
             <View>
+              {/* Uncomment for iOS */}
+              <Button title="Done" onPress={hideDatePicker} />
               <DateTimePicker
                 testID="dateTimePicker"
                 timeZoneOffsetInMinutes={0}
@@ -151,8 +194,6 @@ const AddExpensesScreen = (props) => {
                 display="default"
                 onChange={onChange}
               />
-              {/* Uncomment for iOS */}
-              {/* <Button title="Done" onPress={hideDatePicker} /> */}
             </View>
           )}
           <View>
@@ -175,8 +216,17 @@ const AddExpensesScreen = (props) => {
             </View>
             {showDropdown && (
               <View>
+                <View
+                  style={{
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button title="Done" onPress={hideDropdown} />
+                </View>
                 <Picker
-                  selectedValue={category} //{this.state.language}
+                  selectedValue={category}
                   onValueChange={(itemValue) => setCategory(itemValue)}
                 >
                   {categories.map((category) => (
@@ -187,15 +237,6 @@ const AddExpensesScreen = (props) => {
                     />
                   ))}
                 </Picker>
-                <View
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button title="Done" onPress={hideDropdown} />
-                </View>
               </View>
             )}
           </View>
@@ -206,7 +247,7 @@ const AddExpensesScreen = (props) => {
               placeholder="Amount"
               onChangeText={(val) => setAmount(val)}
               keyboardType="number-pad"
-              //defaultValue={amount}
+              value={amount.toString()}
             />
           </View>
           <View>
@@ -215,26 +256,15 @@ const AddExpensesScreen = (props) => {
               style={styles.textInput}
               placeholder="Note"
               onChangeText={(val) => setNote(val)}
-              //defaultValue={note}
+              value={note}
             />
           </View>
         </View>
       </ScrollView>
-      <View>
-        {/* <Icon
-          reverse
-          name="ios-save"
-          type="ionicon"
-          color="#ffcc00"
-          onPress={saveExpenses}
-          size={25}
-        /> */}
-        <Button
-          style={styles.submit}
-          title="SAVE"
-          onPress={saveExpenses}
-          color="black"
-        />
+      <View style={styles.save}>
+        <TouchableOpacity style={styles.submit} onPress={saveExpenses}>
+          <Text style={styles.heading}>Save</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -251,20 +281,28 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#ffcc00",
+    backgroundColor: constants.backgroundColor,
+  },
+  header: {
+    paddingTop: 40,
+    flexDirection: "row",
   },
   heading: {
-    paddingTop: 50,
     fontSize: 35,
     fontFamily: "Ubuntu",
     color: "white",
   },
+  save: {
+    justifyContent: "flex-end",
+    height: "8%",
+  },
   submit: {
-    height: "40%",
+    height: "100%",
     width: "100%",
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
+    color: "white",
   },
   text: {
     paddingTop: 40,

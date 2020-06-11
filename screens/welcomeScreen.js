@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Button, Text, Animated } from "react-native";
 import { Icon } from "react-native-elements";
+import constant from "../assets/constants";
 
 const WelcomeScreen = (props) => {
   const [fade, setFade] = useState(new Animated.Value(0));
@@ -36,7 +37,7 @@ const WelcomeScreen = (props) => {
 const styles = StyleSheet.create({
   animated: {
     flex: 1,
-    backgroundColor: "#ffcc00",
+    backgroundColor: constant.backgroundColor,
     width: "100%",
     height: "100%",
     justifyContent: "center",

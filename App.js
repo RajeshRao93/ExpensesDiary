@@ -5,11 +5,15 @@ import * as Font from "expo-font";
 import { useFonts } from "@use-expo/font";
 import WelcomeScreen from "./screens/welcomeScreen";
 import StartScreen from "./screens/startScreen";
-import ExpensesScreen from "./screens/expensesScreen";
+import YearFilterScreen from "./screens/yearFilterScreen";
 import AddExpensesScreen from "./screens/addExpensesScreen";
+import MonthFilterScreen from "./screens/monthFilterScreen";
+import ExpenseListSceen from "./screens/expenseListScreen";
 
 export default function App() {
   const [screen, setScreen] = useState("");
+  const [filter1, setFilter1] = useState("");
+  const [filter2, setFilter2] = useState("");
 
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico.ttf"),
@@ -23,12 +27,26 @@ export default function App() {
     setScreen(screenName);
   };
 
+  const navigateScreen = (screenName, filter1, filter2) => {
+    setFilter1(filter1);
+    setFilter2(filter2);
+    setScreen(screenName);
+  };
+
   let content = <WelcomeScreen changeScreen={changeScreen} />;
 
   switch (screen) {
-    case "ExpensesScreen":
-      console.log("test");
-      content = <ExpensesScreen changeScreen={changeScreen} />;
+    case "YearFilterScreen":
+      content = <YearFilterScreen navigateScreen={navigateScreen} />;
+      break;
+    case "MonthFilterScreen":
+      content = (
+        <MonthFilterScreen
+          navigateScreen={navigateScreen}
+          year={filter1}
+          month={filter2}
+        />
+      );
       break;
     case "StartScreen":
       content = <StartScreen changeScreen={changeScreen} />;
@@ -37,8 +55,16 @@ export default function App() {
       content = <WelcomeScreen changeScreen={changeScreen} />;
       break;
     case "AddExpensesScreen":
-      console.log(screen);
       content = <AddExpensesScreen changeScreen={changeScreen} />;
+      break;
+    case "ExpenseListScreen":
+      content = (
+        <ExpenseListSceen
+          navigateScreen={navigateScreen}
+          year={filter1}
+          month={filter2}
+        />
+      );
       break;
   }
 
