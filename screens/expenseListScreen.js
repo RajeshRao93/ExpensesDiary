@@ -159,7 +159,7 @@ const ExpenseListSceen = (props) => {
                 month={props.month}
               />
               <Button
-                title="close"
+                title="Close"
                 onPress={() => statsVisibilityHandler(false)}
               ></Button>
             </View>

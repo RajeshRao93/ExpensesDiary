@@ -89,7 +89,6 @@ const AddExpensesScreen = (props) => {
       months[date.getMonth()].toString() +
       "-" +
       date.getFullYear().toString();
-    console.log(dbDate);
     if (amount == 0 || note == "") {
       alert("Plase enter Amount and Note");
       return;
