@@ -38,11 +38,11 @@ const VisualizationComp = (props) => {
         yLabelsOffset="8"
         yAxisInterval={1} // optional, defaults to 1
         chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#fb8c00",
-          backgroundGradientTo: "#ffa726",
+          // backgroundColor: "#e26a00",
+          //backgroundGradientFrom: "#fb8c00",
+          //backgroundGradientTo: "#ffa726",
           decimalPlaces: 0, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 0, 255, ${opacity})`,
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 16,

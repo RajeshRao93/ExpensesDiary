@@ -160,6 +160,7 @@ const ExpenseListSceen = (props) => {
               />
               <Button
                 title="Close"
+                color="black"
                 onPress={() => statsVisibilityHandler(false)}
               ></Button>
             </View>
