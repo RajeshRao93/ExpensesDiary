@@ -11,7 +11,8 @@ Packages used:
 5. react-native-chart-kit
 
 ## Screenshots (iOS)
-![alt text](screenshots/IMG_0968.PNG)
+![Screenshot1](screenshots/IMG_0968.PNG)
+![Screenshot2](https://github.com/RajeshRao93/ExpensesDiary/blob/master/screenshots/IMG_0969.PNG)
 
 
 
